@@ -24,3 +24,15 @@ package config
 // 	SomeConfigInt  string `cfg:"some-config-int"`  // will have value int(3423)
 // 	SomeConfigBool string `cfg:"some-config-bool"` // will have value boolean(false)
 // }
+
+// Note: we should realy invert dependency from regex,
+// cause the config pattern may change, and we want it to be a little more generic
+
+const key_tag string = `cfg`
+
+const key_regex string = `[\w_-]+`
+
+const s_rgx string = `[\t\f ]*`
+
+const config_regex string = `(?m)^(:?(` + key_regex + `)` + s_rgx + `\:` + s_rgx + `\"(.+?)\"|(` + s_rgx + `)` + s_rgx + `\:` + s_rgx + `(.+?))` + s_rgx + `(:?\/\/|;)?$`
+
