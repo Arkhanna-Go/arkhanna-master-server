@@ -34,11 +34,11 @@ import (
 
 const key_tag string = `cfg`
 
-const key_regex string = `[\w_-]+`
+const key_rgx string = `[\w_-]+`
 
 const s_rgx string = `[\t\f ]*`
 
-const config_regex string = `(?m)^(:?(` + key_regex + `)` + s_rgx + `\:` + s_rgx + `\"(.+?)\"|(` + s_rgx + `)` + s_rgx + `\:` + s_rgx + `(.+?))` + s_rgx + `(:?\/\/|;)?$`
+const config_regex string = `(?m)^(:?(` + key_rgx + `)` + s_rgx + `\:` + s_rgx + `\"(.+?)\"|(` + s_rgx + `)` + s_rgx + `\:` + s_rgx + `(.+?))` + s_rgx + `(:?\/\/|;)?$`
 
 type ConfigMap map[string]string
 
