@@ -1,5 +1,9 @@
 package config
 
+import (
+	"regexp"
+)
+
 // This package describes how to read some simple config text pattern
 // into struct with user defined tags, just as xml or json from encoding package does
 
@@ -35,4 +39,33 @@ const key_regex string = `[\w_-]+`
 const s_rgx string = `[\t\f ]*`
 
 const config_regex string = `(?m)^(:?(` + key_regex + `)` + s_rgx + `\:` + s_rgx + `\"(.+?)\"|(` + s_rgx + `)` + s_rgx + `\:` + s_rgx + `(.+?))` + s_rgx + `(:?\/\/|;)?$`
+
+type ConfigMap map[string]string
+
+// Load the configs
+func LoadConfigs(cfg_string string) (ConfigMap, error) {
+	// TODO maybe it's a good idea to make it more dynamic, for example, to pass the driver
+	// then you can define externally if you'll read a json, a .cfg, or wharever regex defined config file (just like this one, i never saw this cfg pattern before)
+	var re *regexp.Regexp = regexp.MustCompile(config_regex)
+
+	var conf = make(ConfigMap)
+
+	// TODO: improve loop, maybe improvig regex to avoid empty strings
+	for _, match := range re.FindAllStringSubmatch(cfg_string, -1) {
+		var key string
+		var value string
+		for i, _ := range match {
+			if i+1 < len(match) && match[i] != "" && match[i+1] != "" {
+				key = match[i]
+				value = match[i+1]
+			}
+		}
+
+		if key != "" {
+			conf[key] = value
+		}
+	}
+
+	return conf, nil
+}
 
