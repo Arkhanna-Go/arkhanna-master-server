@@ -38,7 +38,7 @@ const key_rgx string = `[\w_-]+`
 
 const s_rgx string = `[\t\f ]*`
 
-const config_regex string = `(?m)^(:?(` + key_rgx + `)` + s_rgx + `\:` + s_rgx + `\"(.+?)\"|(` + s_rgx + `)` + s_rgx + `\:` + s_rgx + `(.+?))` + s_rgx + `(:?\/\/|;)?$`
+const config_regex string = `(?m)^(:?(` + key_rgx + `)` + s_rgx + `\:` + s_rgx + `\"(.+?)\"|(` + key_rgx + `)` + s_rgx + `\:` + s_rgx + `(.+?))` + s_rgx + `(:?\/\/|;)?$`
 
 type ConfigMap map[string]string
 
