@@ -1,7 +1,10 @@
 package config
 
 import (
+	"reflect"
 	"regexp"
+
+	"github.com/raulscr/arkhanna-master-server/types"
 )
 
 // This package describes how to read some simple config text pattern
@@ -67,5 +70,22 @@ func LoadConfigs(cfg_string string) (ConfigMap, error) {
 	}
 
 	return conf, nil
+}
+
+func (confs ConfigMap) SetValuesFromMap(v any) error {
+	// TODO return error if v isn't a reference
+	var err error = nil
+	var t reflect.Type = reflect.ValueOf(v).Elem().Type()
+	for i := 0; i < t.NumField(); i++ {
+		tag_name, ok := t.Field(i).Tag.Lookup(key_tag)
+		if ok {
+			err = types.SetValueFromString(reflect.ValueOf(v).Elem().Field(i), confs[tag_name])
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return err
 }
 
