@@ -15,9 +15,9 @@ type Settable interface {
 type Value reflect.Value
 
 /* Convert some stringed value to correct type if possible
+ * and set it into the field.
  */
-func (f Value) SetValueFromString(str_val string) error {
-	var rf = reflect.Value(f)
+func SetValueFromString(f reflect.Value, str_val string) error {
 
 	var conv_map = map[reflect.Kind]func(reflect.Value, string) error{
 		reflect.String:  setValueString,
@@ -36,13 +36,20 @@ func (f Value) SetValueFromString(str_val string) error {
 		reflect.Float64: setValueFloat64,
 	}
 
-	var conv_func = conv_map[rf.Kind()]
+	var conv_func = conv_map[f.Kind()]
 
 	if conv_func == nil {
-		return errors.New(`config: Field of type '` + rf.Type().Name() + `' not suported.`)
+		return errors.New(`config: Field of type '` + f.Type().Name() + `' not suported.`)
 	}
 
-	return conv_func(rf, str_val)
+	return conv_func(f, str_val)
+}
+
+/* Convert some stringed value to correct type if possible
+ * and set it into the field.
+ */
+func (f Value) SetValueFromString(str_val string) error {
+	return SetValueFromString(reflect.Value(f), str_val)
 }
 
 /// Private
