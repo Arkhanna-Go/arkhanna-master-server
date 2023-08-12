@@ -89,3 +89,12 @@ func (confs ConfigMap) SetValuesFromMap(v any) error {
 	return err
 }
 
+// Read some data bytes on the designed format, then convert it to the struct (just as encoding/xml does)
+func Unmarshal(data []byte, v any) error {
+	confs, err := LoadConfigs(string(data))
+	if err != nil {
+		return err
+	}
+
+	return confs.SetValuesFromMap(v)
+}
