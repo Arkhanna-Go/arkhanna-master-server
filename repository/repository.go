@@ -48,3 +48,48 @@ func connectDatabase(conn_info CONN_INFO) (*sql.DB, error) {
 
 	return db, nil
 }
+
+// Exec Statement
+// TODO: protect it from multiple access (use some mutex)
+func Exec(query string, args ...any) error {
+
+	db, err := connectDatabase(DatabaseConnectionInfo)
+
+	if err != nil {
+		return err
+	}
+
+	statement, err := db.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	_, err = statement.Exec(args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Exec Query and return the rows
+// Don't forget to close rows after using
+// TODO: protect it from multiple access (use some mutex)
+func ExecQuery(query string, args ...any) (*sql.Rows, error) {
+
+	db, err := connectDatabase(DatabaseConnectionInfo)
+
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := db.Query(query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
+}
+
+// TODO make some generic function that load the query return directly into some variable
