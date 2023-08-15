@@ -50,7 +50,6 @@ func connectDatabase(conn_info CONN_INFO) (*sql.DB, error) {
 }
 
 // Exec Statement
-// TODO: protect it from multiple access (use some mutex)
 func Exec(query string, args ...any) error {
 
 	db, err := connectDatabase(DatabaseConnectionInfo)
@@ -75,7 +74,6 @@ func Exec(query string, args ...any) error {
 
 // Exec Query and return the rows
 // Don't forget to close rows after using
-// TODO: protect it from multiple access (use some mutex)
 func ExecQuery(query string, args ...any) (*sql.Rows, error) {
 
 	db, err := connectDatabase(DatabaseConnectionInfo)
