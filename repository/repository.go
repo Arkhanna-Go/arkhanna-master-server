@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -50,8 +51,7 @@ func connectDatabase(conn_info CONN_INFO) (*sql.DB, error) {
 }
 
 // Exec Statement
-func Exec(query string, args ...any) error {
-
+func ExecStatement(query string, args ...any) error {
 	db, err := connectDatabase(DatabaseConnectionInfo)
 
 	if err != nil {
@@ -70,6 +70,43 @@ func Exec(query string, args ...any) error {
 	}
 
 	return nil
+}
+
+// Exec Statement
+func ExecRaw(query string, args ...any) error {
+	db, err := connectDatabase(DatabaseConnectionInfo)
+
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(query, args...)
+	if err != nil {
+		return err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Exec file query
+func ExecFile(file_path string, args ...any) error {
+	file_content, err := os.ReadFile(file_path)
+	if err != nil {
+		return err
+	}
+
+	return ExecRaw(string(file_content), args...)
 }
 
 // Exec Query and return the rows
