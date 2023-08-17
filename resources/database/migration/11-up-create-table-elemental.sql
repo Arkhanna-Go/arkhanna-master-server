@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `elemental` (
+  `ele_id` int(11) unsigned NOT NULL auto_increment,
+  `char_id` int(11) NOT NULL,
+  `class` mediumint(9) unsigned NOT NULL default '0',
+  `mode` int(11) unsigned NOT NULL default '1',
+  `hp` int(11) unsigned NOT NULL default '0',
+  `sp` int(11) unsigned NOT NULL default '0',
+  `max_hp` int(11) unsigned NOT NULL default '0',
+  `max_sp` int(11) unsigned NOT NULL default '0',
+  `atk1` MEDIUMINT(6) unsigned NOT NULL default '0',
+  `atk2` MEDIUMINT(6) unsigned NOT NULL default '0',
+  `matk` MEDIUMINT(6) unsigned NOT NULL default '0',
+  `aspd` smallint(4) unsigned NOT NULL default '0',
+  `def` smallint(4) unsigned NOT NULL default '0',
+  `mdef` smallint(4) unsigned NOT NULL default '0',
+  `flee` smallint(4) unsigned NOT NULL default '0',
+  `hit` smallint(4) unsigned NOT NULL default '0',
+  `life_time` bigint(20) NOT NULL default '0',
+  PRIMARY KEY  (`ele_id`)
+) ENGINE=MyISAM;

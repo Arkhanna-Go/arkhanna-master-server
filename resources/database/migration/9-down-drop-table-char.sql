@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS `charlog`;
+DROP TABLE IF EXISTS `char_reg_str`;
+DROP TABLE IF EXISTS `char_reg_num`;
+DROP TABLE IF EXISTS `char`;

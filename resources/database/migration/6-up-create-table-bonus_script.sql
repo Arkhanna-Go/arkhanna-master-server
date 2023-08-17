@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `bonus_script` (
+  `char_id` INT(11) UNSIGNED NOT NULL,
+  `script` TEXT NOT NULL,
+  `tick` BIGINT(20) NOT NULL DEFAULT '0',
+  `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+  `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+  `icon` SMALLINT(3) NOT NULL DEFAULT '-1',
+  KEY `char_id` (`char_id`)
+) ENGINE=InnoDB;

@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS `clan_alliance`;
+DROP TABLE IF EXISTS `clan`;
