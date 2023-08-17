@@ -8,6 +8,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// TODO refactor this to make a interface ConnInfo with connection info and databaseInfoToString()
+// then struct that inherit sql.DB (or have it as member), to handle all new methods, and a member of ConnInfo too
+
 type DB_INFO struct {
 	Username string
 	Password string
@@ -21,7 +24,7 @@ type CONN_INFO struct {
 	Port     uint16 `default:"3306"`
 }
 
-const BaseConnectionSourceFormat string = "%s:%s@%s(%s:%d)/%s"
+const BaseConnectionSourceFormat string = "%s:%s@%s(%s:%d)/%s?multiStatements=true"
 
 var DatabaseConnectionInfo CONN_INFO
 
