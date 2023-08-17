@@ -1,5 +1,28 @@
 package migration
 
+// TODO: Create a new file (or package) for handling migration information saved on DB
+// CREATE TABLE migration (
+// 	index 		INT,
+// 	file  		VARCHAR(50),
+// 	filesha256	VARCHAR(7)
+// )
+// use this table to:
+// 1. update migration information on upgrade (insert on table)
+// 2. update migration information on downgrade (delete from table)
+// 3. verify migration current state
+//  3.1. if it is consistent (index == count, then OK)
+//  3.2. if there is need to upgrade (index < count)
+//  3.3. if there is need to downgrade (index > count)
+// 4. if it is discontinuous (missing row on database, or some file/checksum diffenrent from loaded file)
+//  If that's the case, you can try to recover it by:
+//  4.1. Make a backup, just for sure. (data may be lost on the process)
+//  4.2. Downgrade until the corrupted point
+//   4.2.1. There may be errors, we need our downgrade to ignore them (or just make a function Recover or something)
+//  4.3 Upgrade it again
+//  4.4 Verify data lost (it may be difficult, I don't think it's possible to do if'ts not manually)
+
+// NOTE: repository package will be refactored soon, there will be some impact on this module.
+
 import (
 	"fmt"
 	"os"
